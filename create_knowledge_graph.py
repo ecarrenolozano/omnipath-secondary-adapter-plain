@@ -1,60 +1,63 @@
-from biocypher import BioCypher, Resource
-from template_package.adapters.example_adapter import (
-    ExampleAdapter,
-    ExampleAdapterNodeType,
-    ExampleAdapterEdgeType,
-    ExampleAdapterProteinField,
-    ExampleAdapterDiseaseField,
+from biocypher import (
+    BioCypher,
+    FileDownload,
+)
+from omnipath_secondary_adapter.adapters.omnipath_adapter import (
+    OmnipathAdapter,
+    OmnipathAdapterNodeType,
+    OmnipathAdapterEdgeType,
+    OmnipathAdapterProteinField,
 )
 
-# Instantiate the BioCypher interface
-# You can use `config/biocypher_config.yaml` to configure the framework or
-# supply settings via parameters below
+import pandas as pd
+
+# -----------------------
+# Step 1. Data download
+
 bc = BioCypher()
 
-# Download and cache resources (change the directory in the options if needed)
-urls = "https://file-examples.com/wp-content/storage/2017/02/file_example_CSV_5000.csv"
-resource = Resource(
-    name="Example resource",  # Name of the resource
-    url_s=urls,  # URL to the resource(s)
-    lifetime=7,  # seven days cache lifetime
-)
-paths = bc.download(resource)  # Downloads to '.cache' by default
+
+# urls = "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter/data/subset_interactions_100.tsv"
+# networks_omnipath = FileDownload(
+#     name="omniapth_networks",  # Name of the resource
+#     url_s=urls,  # URL to the resource(s)
+#     lifetime=7,  # seven days cache lifetime
+# )
+# paths = bc.download(networks_omnipath)  # Downloads to '.cache' by default
+paths = [
+    "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter/data/subset_interactions_100.tsv"
+]
 print(paths)
+
+
 # You can use the list of paths returned to read the resource into your adapter
 
 # Choose node types to include in the knowledge graph.
 # These are defined in the adapter (`adapter.py`).
 node_types = [
-    ExampleAdapterNodeType.PROTEIN,
-    ExampleAdapterNodeType.DISEASE,
+    OmnipathAdapterNodeType.PROTEIN,
 ]
 
 # Choose protein adapter fields to include in the knowledge graph.
 # These are defined in the adapter (`adapter.py`).
 node_fields = [
     # Proteins
-    ExampleAdapterProteinField.ID,
-    ExampleAdapterProteinField.SEQUENCE,
-    ExampleAdapterProteinField.DESCRIPTION,
-    ExampleAdapterProteinField.TAXON,
-    # Diseases
-    ExampleAdapterDiseaseField.ID,
-    ExampleAdapterDiseaseField.NAME,
-    ExampleAdapterDiseaseField.DESCRIPTION,
+    OmnipathAdapterProteinField.GENESYMBOL,
+    OmnipathAdapterProteinField.ENTITY_TYPE,
+    OmnipathAdapterProteinField.NCBI_TAX_ID,
 ]
 
 edge_types = [
-    ExampleAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION,
-    ExampleAdapterEdgeType.PROTEIN_DISEASE_ASSOCIATION,
+    OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION,
 ]
 
 # Create a protein adapter instance
-adapter = ExampleAdapter(
-    node_types=node_types,
-    node_fields=node_fields,
-    edge_types=edge_types,
+adapter = OmnipathAdapter(
+    # node_types=node_types,
+    # node_fields=node_fields,
+    # edge_types=edge_types,
     # we can leave edge fields empty, defaulting to all fields in the adapter
+    file_path=paths[0],
 )
 
 

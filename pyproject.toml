@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "biocypher-project-template"
+name = "omnipath-secondary-adapter-plain"
 version = "0.5.43"
 description = "Template for creating a BioCypher-driven knowledge graph"
 authors = [
@@ -10,8 +10,8 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-biocypher = "^0.5.43"
+python = "^3.12"
+biocypher = "^0.9.1"
 
 [build-system]
 requires = ["poetry-core"]
