@@ -50,6 +50,7 @@ class OmnipathAdapterProteinProteinEdgeField(Enum):
     CONSENSUS_DIRECTION = "consensus_direction"
     CONSENSUS_STIMULATION = "consensus_stimulation"
     CONSENSUS_INHIBITION = "consensus_inhibition"
+    INTERACTION_TYPE = "type"
 
 
 # ====================================================================================
@@ -431,6 +432,11 @@ class ProteinProteinInteractions(Edge):
             and OmnipathAdapterProteinProteinEdgeField.CONSENSUS_INHIBITION in self.fields
         ):
             properties["consensus_inhibition"] = self.row.consensus_inhibition
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.INTERACTION_TYPE in self.fields
+        ):
+            properties["interaction_type"] = self.row.type
 
         return properties
 
