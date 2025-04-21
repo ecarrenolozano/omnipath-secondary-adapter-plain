@@ -19,4 +19,6 @@ protein protein interaction:
         is_directed: int
         is_stimulation: int
         is_inhibition: int
-
+        consensus_direction: bool
+        consensus_stimulation: bool
+        consensus_inhibition: bool

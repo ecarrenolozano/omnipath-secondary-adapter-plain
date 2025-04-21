@@ -132,3 +132,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea
+
+
+# Cache Omnipath data
+data/
+
+data_testing/

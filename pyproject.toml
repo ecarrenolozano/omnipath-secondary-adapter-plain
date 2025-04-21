@@ -12,6 +12,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 biocypher = "^0.9.1"
+pandera = "^0.23.1"
 
 [build-system]
 requires = ["poetry-core"]
