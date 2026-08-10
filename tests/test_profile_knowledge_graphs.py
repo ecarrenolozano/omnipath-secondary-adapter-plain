@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import gzip
+import json
 import sys
 import zipfile
 from pathlib import Path
@@ -15,20 +17,65 @@ def sample_tsv_name(row_count: int) -> str:
     )
 
 
+def write_sample(path: Path, rows: list[tuple[str, str, str, str]]) -> None:
+    with gzip.open(path, "wt", encoding="utf-8") as handle:
+        handle.write(
+            "source\ttarget\tentity_type_source\tentity_type_target\n",
+        )
+        for source, target, source_type, target_type in rows:
+            handle.write(f"{source}\t{target}\t{source_type}\t{target_type}\n")
+
+
 def test_profile_input_writes_cprofile_report(monkeypatch, tmp_path: Path) -> None:
     input_file = tmp_path / sample_tsv_name(2)
-    input_file.write_text("source\ttarget\nP1\tP2\nP2\tP3\n", encoding="utf-8")
+    write_sample(
+        input_file,
+        [
+            ("P1", "P2", "protein", "protein"),
+            ("P1", "P2", "protein", "protein"),
+        ],
+    )
     results_dir = tmp_path / "results"
 
     calls = []
+    output_dir = tmp_path / "biocypher-out" / "run1"
+    log_dir = tmp_path / "biocypher-log"
+    log_path = log_dir / "biocypher-test.log"
+    log_dir.mkdir()
+    log_path.write_text("old run\n", encoding="utf-8")
 
     def fake_build_knowledge_graph(input_file: Path) -> None:
         calls.append(input_file)
+        output_dir.mkdir(parents=True)
+        (output_dir / "Protein-part000.csv").write_text("P1\nP2\n", encoding="utf-8")
+        (output_dir / "ProteinProteinInteraction-part000.csv").write_text(
+            "P1\tP2\n",
+            encoding="utf-8",
+        )
+        with log_path.open("a", encoding="utf-8") as log:
+            log.write(
+                "2026-08-10 14:21:48,165\tWARNING\tmodule:_deduplicate\n"
+                "Duplicate edge type protein protein interaction found.\n"
+                "No duplicate nodes in input.\n"
+                "Duplicate edge types encountered (IDs in log):\n"
+                "Duplicate edge IDs encountered:\n"
+                "No missing labels in input.\n",
+            )
 
     monkeypatch.setattr(
         profile_knowledge_graphs,
-        "build_knowledge_graph",
+        "build_profiled_knowledge_graph",
         fake_build_knowledge_graph,
+    )
+    monkeypatch.setattr(
+        profile_knowledge_graphs,
+        "DEFAULT_BIOCYPHER_OUTPUT_DIR",
+        tmp_path / "biocypher-out",
+    )
+    monkeypatch.setattr(
+        profile_knowledge_graphs,
+        "DEFAULT_BIOCYPHER_LOG_DIR",
+        log_dir,
     )
 
     result = profile_knowledge_graphs.profile_input(
@@ -39,11 +86,56 @@ def test_profile_input_writes_cprofile_report(monkeypatch, tmp_path: Path) -> No
     assert result.row_count == "2"
     assert result.elapsed_seconds >= 0
     assert result.report_path == results_dir / "profile_bc_networks_2.txt"
+    assert result.metadata_path == results_dir / "profile_bc_networks_2.json"
     assert "function calls" in result.report_path.read_text(encoding="utf-8")
     assert calls == [input_file]
+    metadata = json.loads(result.metadata_path.read_text(encoding="utf-8"))
+    assert metadata["graph_counts"] == {"nodes": 2, "edges": 1}
+    assert metadata["input_diagnostics"] == {
+        "input_rows": 2,
+        "node_mentions": 4,
+        "unique_nodes": 2,
+        "repeated_node_mentions": 2,
+        "input_edges": 2,
+        "unique_edges": 1,
+        "duplicate_edges": 1,
+        "messages": [
+            (
+                "Input contains 2 repeated node mentions that collapse into existing "
+                "node records before BioCypher validation."
+            ),
+            "Input contains 1 duplicate edge.",
+        ],
+    }
+    assert metadata["biocypher_output_dir"] == str(output_dir)
+    assert metadata["biocypher_log_path"] == str(log_path)
+    assert "No duplicate nodes in input." in "\n".join(metadata["validation_messages"])
+    assert metadata["biocypher_validation"] == {
+        "duplicate_nodes": False,
+        "duplicate_edges": True,
+        "missing_labels": False,
+        "bad_relationships": False,
+        "import_failed": False,
+        "warnings": ["Duplicate edge type protein protein interaction found."],
+        "status_messages": [
+            "No duplicate nodes in input.",
+            "No missing labels in input.",
+        ],
+        "raw_messages": [
+            "2026-08-10 14:21:48,165\tWARNING\tmodule:_deduplicate",
+            "Duplicate edge type protein protein interaction found.",
+            "No duplicate nodes in input.",
+            "Duplicate edge types encountered (IDs in log):",
+            "Duplicate edge IDs encountered:",
+            "No missing labels in input.",
+        ],
+    }
+    assert "old run" not in "\n".join(metadata["validation_messages"])
 
 
-def test_prepare_profile_inputs_reuses_cached_archive(monkeypatch, tmp_path: Path) -> None:
+def test_prepare_profile_inputs_reuses_cached_archive(
+    monkeypatch, tmp_path: Path
+) -> None:
     data_dir = tmp_path / "data"
     data_dir.mkdir()
     archive_path = data_dir / "interactions_sampled.zip"
@@ -57,7 +149,9 @@ def test_prepare_profile_inputs_reuses_cached_archive(monkeypatch, tmp_path: Pat
         assert path.exists()
         return path
 
-    monkeypatch.setattr(profile_knowledge_graphs, "download_profile_archive", fake_download)
+    monkeypatch.setattr(
+        profile_knowledge_graphs, "download_profile_archive", fake_download
+    )
 
     input_files = profile_knowledge_graphs.prepare_profile_inputs(data_dir)
 
@@ -102,7 +196,7 @@ def test_main_input_dir_override_skips_download_and_extraction(
     results_dir = tmp_path / "results"
     input_dir.mkdir()
     input_file = input_dir / sample_tsv_name(2)
-    input_file.write_text("source\ttarget\nP1\tP2\n", encoding="utf-8")
+    write_sample(input_file, [("P1", "P2", "protein", "protein")])
 
     def fail_prepare(data_dir: Path) -> list[Path]:
         raise AssertionError("input-dir override should skip preparation")
@@ -115,9 +209,12 @@ def test_main_input_dir_override_skips_download_and_extraction(
             row_count="2",
             elapsed_seconds=0.01,
             report_path=results_dir / "profile_bc_networks_2.txt",
+            metadata_path=results_dir / "profile_bc_networks_2.json",
         )
 
-    monkeypatch.setattr(profile_knowledge_graphs, "prepare_profile_inputs", fail_prepare)
+    monkeypatch.setattr(
+        profile_knowledge_graphs, "prepare_profile_inputs", fail_prepare
+    )
     monkeypatch.setattr(profile_knowledge_graphs, "profile_input", fake_profile_input)
     monkeypatch.setattr(
         sys,
