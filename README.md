@@ -89,8 +89,59 @@ uv run python -m scripts.profile_knowledge_graphs --input-dir path/to/tsvs
 ```
 
 The command prints a terminal summary and writes cProfile text reports to
-`profiling/results/profile_bc_networks_<rows>.txt`. BioCypher decides where
-knowledge graph build outputs are written from its normal configuration.
+`profiling/results/profile_bc_networks_<rows>.txt`. It also writes structured
+JSON sidecars at `profiling/results/profile_bc_networks_<rows>.json` with graph
+counts, BioCypher output paths, input diagnostics, raw BioCypher validation
+messages, and structured BioCypher validation status.
+
+Input diagnostics report repeated node mentions separately from duplicate
+BioCypher node records. Repeated node mentions are source/target appearances
+that collapse into unique node records before BioCypher validation, so they do
+not contradict BioCypher messages such as `No duplicate nodes in input.` Edge
+diagnostics report duplicate relationship records and should agree with
+BioCypher duplicate edge warnings.
+
+The JSON sidecar keeps raw log-derived messages in `validation_messages` for
+traceability, but the recommended field for automated reporting is
+`biocypher_validation`. It separates raw log lines from clean status fields:
+
+```json
+{
+  "duplicate_nodes": false,
+  "duplicate_edges": true,
+  "missing_labels": false,
+  "bad_relationships": false,
+  "import_failed": false,
+  "warnings": [
+    "Duplicate edge type protein protein interaction found."
+  ],
+  "status_messages": [
+    "No duplicate nodes in input.",
+    "No missing labels in input."
+  ],
+  "raw_messages": []
+}
+```
+
+BioCypher decides where knowledge graph build outputs are written from its
+normal configuration.
+
+Generate a Markdown summary report from the JSON sidecars and cProfile reports:
+
+```bash
+uv run python -m scripts.summarize_profile_results
+```
+
+The report is written to:
+
+```text
+profiling/results/summary.md
+```
+
+The summary report uses `biocypher_validation` for a compact validation table
+and keeps only meaningful warnings in the findings section. Log metadata and
+BioCypher section headers remain available in the JSON `raw_messages`, but they
+are not shown as validation findings.
 
 ## Tests
 
