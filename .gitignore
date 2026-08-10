@@ -134,7 +134,7 @@ dmypy.json
 .idea
 
 
-# Cache Omnipath data
-data/
+# Data Folders
+data/*
+profiling/*
 
-data_testing/

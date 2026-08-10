@@ -1,19 +1,32 @@
-[tool.poetry]
+[project]
 name = "omnipath-secondary-adapter-plain"
-version = "0.5.43"
-description = "Template for creating a BioCypher-driven knowledge graph"
+version = "0.6.0"
+description = "Plain BioCypher adapter for profiling OmniPath interaction knowledge graph builds"
 authors = [
-    "Sebastian Lobentanzer <sebastian.lobentanzer@gmail.com>",
-    "Andreas Maier <andreas.maier-1@uni-hamburg.de>",
+    { name = "Edwin Carreño", email = "ecarrenolozano@gmail.com" },
 ]
-license = "MIT"
+license = { text = "MIT" }
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "biocypher>=0.9.6",
+    "pandera>=0.23.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.12"
-biocypher = "^0.9.1"
-pandera = "^0.23.1"
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src",
+    ".",
+]
