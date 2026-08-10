@@ -29,14 +29,15 @@ SAMPLES_URL = (
     "https://zenodo.org/records/21722429/files/interactions_sampled.zip?download=1"
 )
 SUMMARY_HEADER = "input_file\trows\tseconds\treport"
-EDGE_LABEL = "protein_protein_interaction"
 SOURCE_COLUMN = "source"
 TARGET_COLUMN = "target"
+TYPE_COLUMN = "type"
 SOURCE_ENTITY_TYPE_COLUMN = "entity_type_source"
 TARGET_ENTITY_TYPE_COLUMN = "entity_type_target"
 DIAGNOSTIC_COLUMNS = (
     SOURCE_COLUMN,
     TARGET_COLUMN,
+    TYPE_COLUMN,
     SOURCE_ENTITY_TYPE_COLUMN,
     TARGET_ENTITY_TYPE_COLUMN,
 )
@@ -115,14 +116,39 @@ def count_csv_rows(paths: list[Path]) -> int:
     return sum(sum(1 for _ in path.open("r", encoding="utf-8")) for path in paths)
 
 
+def label_from_part_file(path: Path) -> str:
+    label = re.sub(r"-part\d+\.csv$", "", path.name)
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", label).lower()
+
+
+def counts_by_label(paths: list[Path]) -> dict[str, int]:
+    counts = {}
+    for path in paths:
+        label = label_from_part_file(path)
+        counts[label] = counts.get(label, 0) + count_csv_rows([path])
+    return counts
+
+
 def graph_counts(output_dir: Path | None) -> dict[str, int | None]:
     if output_dir is None or not output_dir.exists():
-        return {"nodes": None, "edges": None}
+        return {
+            "nodes": None,
+            "edges": None,
+            "nodes_by_label": {},
+            "edges_by_label": {},
+        }
+    node_counts = counts_by_label(sorted(output_dir.glob("*-part*.csv")))
+    edge_counts = {
+        label: count for label, count in node_counts.items() if label != "protein"
+    }
+    node_counts = {
+        label: count for label, count in node_counts.items() if label == "protein"
+    }
     return {
-        "nodes": count_csv_rows(sorted(output_dir.glob("Protein-part*.csv"))),
-        "edges": count_csv_rows(
-            sorted(output_dir.glob("ProteinProteinInteraction-part*.csv")),
-        ),
+        "nodes": sum(node_counts.values()),
+        "edges": sum(edge_counts.values()),
+        "nodes_by_label": node_counts,
+        "edges_by_label": edge_counts,
     }
 
 
@@ -224,8 +250,13 @@ def input_diagnostics(input_file: Path) -> dict[str, int | list[str]]:
     ]
     node_ids = source_ids + target_ids
     edge_ids = [
-        (source_id, target_id, EDGE_LABEL)
-        for source_id, target_id in zip(source_ids, target_ids, strict=True)
+        (source_id, target_id, edge_label)
+        for source_id, target_id, edge_label in zip(
+            source_ids,
+            target_ids,
+            data[TYPE_COLUMN],
+            strict=True,
+        )
     ]
 
     repeated_node_mentions = len(node_ids) - len(set(node_ids))

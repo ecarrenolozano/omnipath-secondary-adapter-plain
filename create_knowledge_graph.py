@@ -48,9 +48,7 @@ def build_knowledge_graph(input_file: Path | None = None) -> None:
         OmnipathAdapterProteinField.ORIGINAL_ID,
     ]
 
-    edge_types = [
-        OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION,
-    ]
+    edge_types = list(OmnipathAdapterEdgeType)
     edge_fields = [
         OmnipathAdapterProteinProteinEdgeField.IS_DIRECTED,
         OmnipathAdapterProteinProteinEdgeField.IS_INHIBITION,
@@ -58,7 +56,27 @@ def build_knowledge_graph(input_file: Path | None = None) -> None:
         OmnipathAdapterProteinProteinEdgeField.CONSENSUS_DIRECTION,
         OmnipathAdapterProteinProteinEdgeField.CONSENSUS_INHIBITION,
         OmnipathAdapterProteinProteinEdgeField.CONSENSUS_STIMULATION,
+        OmnipathAdapterProteinProteinEdgeField.SOURCES,
+        OmnipathAdapterProteinProteinEdgeField.REFERENCES,
+        OmnipathAdapterProteinProteinEdgeField.OMNIPATH,
+        OmnipathAdapterProteinProteinEdgeField.KINASEEXTRA,
+        OmnipathAdapterProteinProteinEdgeField.LIGRECEXTRA,
+        OmnipathAdapterProteinProteinEdgeField.PATHWAYEXTRA,
+        OmnipathAdapterProteinProteinEdgeField.DOROTHEA,
+        OmnipathAdapterProteinProteinEdgeField.COLLECTRI,
+        OmnipathAdapterProteinProteinEdgeField.TF_TARGET,
+        OmnipathAdapterProteinProteinEdgeField.LNCRNA_MRNA,
+        OmnipathAdapterProteinProteinEdgeField.TF_MIRNA,
+        OmnipathAdapterProteinProteinEdgeField.SMALL_MOLECULE,
+        OmnipathAdapterProteinProteinEdgeField.DOROTHEA_CURATED,
+        OmnipathAdapterProteinProteinEdgeField.DOROTHEA_CHIPSEQ,
+        OmnipathAdapterProteinProteinEdgeField.DOROTHEA_TFBS,
+        OmnipathAdapterProteinProteinEdgeField.DOROTHEA_COEXP,
+        OmnipathAdapterProteinProteinEdgeField.DOROTHEA_LEVEL,
         OmnipathAdapterProteinProteinEdgeField.INTERACTION_TYPE,
+        OmnipathAdapterProteinProteinEdgeField.CURATION_EFFORT,
+        OmnipathAdapterProteinProteinEdgeField.EXTRA_ATTRS,
+        OmnipathAdapterProteinProteinEdgeField.EVIDENCES,
     ]
 
     adapter = OmnipathAdapter(

@@ -17,13 +17,15 @@ def sample_tsv_name(row_count: int) -> str:
     )
 
 
-def write_sample(path: Path, rows: list[tuple[str, str, str, str]]) -> None:
+def write_sample(path: Path, rows: list[tuple[str, str, str, str, str]]) -> None:
     with gzip.open(path, "wt", encoding="utf-8") as handle:
         handle.write(
-            "source\ttarget\tentity_type_source\tentity_type_target\n",
+            "source\ttarget\ttype\tentity_type_source\tentity_type_target\n",
         )
-        for source, target, source_type, target_type in rows:
-            handle.write(f"{source}\t{target}\t{source_type}\t{target_type}\n")
+        for source, target, interaction_type, source_type, target_type in rows:
+            handle.write(
+                f"{source}\t{target}\t{interaction_type}\t{source_type}\t{target_type}\n"
+            )
 
 
 def test_profile_input_writes_cprofile_report(monkeypatch, tmp_path: Path) -> None:
@@ -31,8 +33,8 @@ def test_profile_input_writes_cprofile_report(monkeypatch, tmp_path: Path) -> No
     write_sample(
         input_file,
         [
-            ("P1", "P2", "protein", "protein"),
-            ("P1", "P2", "protein", "protein"),
+            ("P1", "P2", "post_translational", "protein", "protein"),
+            ("P1", "P2", "post_translational", "protein", "protein"),
         ],
     )
     results_dir = tmp_path / "results"
@@ -90,7 +92,12 @@ def test_profile_input_writes_cprofile_report(monkeypatch, tmp_path: Path) -> No
     assert "function calls" in result.report_path.read_text(encoding="utf-8")
     assert calls == [input_file]
     metadata = json.loads(result.metadata_path.read_text(encoding="utf-8"))
-    assert metadata["graph_counts"] == {"nodes": 2, "edges": 1}
+    assert metadata["graph_counts"] == {
+        "nodes": 2,
+        "edges": 1,
+        "nodes_by_label": {"protein": 2},
+        "edges_by_label": {"protein_protein_interaction": 1},
+    }
     assert metadata["input_diagnostics"] == {
         "input_rows": 2,
         "node_mentions": 4,
@@ -196,7 +203,7 @@ def test_main_input_dir_override_skips_download_and_extraction(
     results_dir = tmp_path / "results"
     input_dir.mkdir()
     input_file = input_dir / sample_tsv_name(2)
-    write_sample(input_file, [("P1", "P2", "protein", "protein")])
+    write_sample(input_file, [("P1", "P2", "post_translational", "protein", "protein")])
 
     def fail_prepare(data_dir: Path) -> list[Path]:
         raise AssertionError("input-dir override should skip preparation")

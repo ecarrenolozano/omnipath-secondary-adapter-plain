@@ -41,7 +41,9 @@ def test_build_knowledge_graph_uses_local_input_without_download(
         raise AssertionError("download should not run when input_file is provided")
 
     monkeypatch.setattr(create_knowledge_graph, "BioCypher", fake_biocypher)
-    monkeypatch.setattr(create_knowledge_graph, "download_omnipath_networks", fail_download)
+    monkeypatch.setattr(
+        create_knowledge_graph, "download_omnipath_networks", fail_download
+    )
 
     create_knowledge_graph.build_knowledge_graph(input_file=sample_networks_tsv)
 

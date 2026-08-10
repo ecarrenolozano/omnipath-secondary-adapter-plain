@@ -1,0 +1,56 @@
+{
+  "input_file": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/data/interactions_sampled/interactions_sampled_1000.tsv.gz",
+  "row_count": "1000",
+  "elapsed_seconds": 0.6478554029017687,
+  "profile_report_path": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/results/profile_bc_networks_1000.txt",
+  "biocypher_output_dir": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-out/20260810160629",
+  "biocypher_log_path": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-log/biocypher-20260810-160627.log",
+  "graph_counts": {
+    "nodes": 1618,
+    "edges": 1000,
+    "nodes_by_label": {
+      "protein": 1618
+    },
+    "edges_by_label": {
+      "post_transcriptional": 4,
+      "post_translational": 216,
+      "small_molecule_protein": 5,
+      "transcriptional": 775
+    }
+  },
+  "input_diagnostics": {
+    "input_rows": 1000,
+    "node_mentions": 2000,
+    "unique_nodes": 1618,
+    "repeated_node_mentions": 382,
+    "input_edges": 1000,
+    "unique_edges": 1000,
+    "duplicate_edges": 0,
+    "messages": [
+      "Input contains 382 repeated node mentions that collapse into existing node records before BioCypher validation."
+    ]
+  },
+  "validation_messages": [
+    "No duplicate nodes in input.",
+    "No duplicate edges in input.",
+    "No missing labels in input."
+  ],
+  "biocypher_validation": {
+    "duplicate_nodes": false,
+    "duplicate_edges": false,
+    "missing_labels": false,
+    "bad_relationships": false,
+    "import_failed": false,
+    "warnings": [],
+    "status_messages": [
+      "No duplicate nodes in input.",
+      "No duplicate edges in input.",
+      "No missing labels in input."
+    ],
+    "raw_messages": [
+      "No duplicate nodes in input.",
+      "No duplicate edges in input.",
+      "No missing labels in input."
+    ]
+  }
+}

@@ -22,7 +22,7 @@ def test_adapter_generates_unique_protein_nodes(sample_networks_tsv: Path) -> No
             OmnipathAdapterProteinField.ENTITY_TYPE,
             OmnipathAdapterProteinField.ORIGINAL_ID,
         ],
-        edge_types=[OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION],
+        edge_types=[OmnipathAdapterEdgeType.POST_TRANSLATIONAL],
         file_path=str(sample_networks_tsv),
     )
 
@@ -43,7 +43,7 @@ def test_adapter_generates_configured_protein_interaction_edges(
 ) -> None:
     adapter = OmnipathAdapter(
         node_types=[OmnipathAdapterNodeType.PROTEIN],
-        edge_types=[OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION],
+        edge_types=[OmnipathAdapterEdgeType.POST_TRANSLATIONAL],
         edge_fields=[
             OmnipathAdapterProteinProteinEdgeField.IS_DIRECTED,
             OmnipathAdapterProteinProteinEdgeField.IS_STIMULATION,
@@ -55,24 +55,49 @@ def test_adapter_generates_configured_protein_interaction_edges(
     edges = list(adapter.get_edges())
 
     assert edges[0] == (
-        "RELID_P1_P2",
+        "RELID_P1_P2_post_translational",
         "P1",
         "P2",
-        "protein_protein_interaction",
+        "post_translational",
         {
             "is_directed": True,
             "is_stimulation": True,
             "is_inhibition": False,
         },
     )
-    assert edges[1][1:4] == ("P2", "P3", "protein_protein_interaction")
+    assert edges[0][0] == "RELID_P1_P2_post_translational"
+    assert edges[1][1:4] == ("P2", "P3", "post_translational")
+
+
+def test_adapter_maps_edge_labels_from_omnipath_type(sample_networks_tsv: Path) -> None:
+    text = sample_networks_tsv.read_text(encoding="utf-8")
+    text = text.replace("post_translational", "transcriptional", 1)
+    sample_networks_tsv.write_text(text, encoding="utf-8")
+
+    adapter = OmnipathAdapter(
+        node_types=[OmnipathAdapterNodeType.PROTEIN],
+        edge_types=list(OmnipathAdapterEdgeType),
+        edge_fields=[OmnipathAdapterProteinProteinEdgeField.INTERACTION_TYPE],
+        file_path=str(sample_networks_tsv),
+    )
+
+    edges = list(adapter.get_edges())
+
+    assert edges[0][0] == "RELID_P1_P2_transcriptional"
+    assert edges[0][3] == "transcriptional"
+    assert edges[0][4] == {"type": "transcriptional"}
 
 
 def test_adapter_labels_match_schema_config() -> None:
     schema_text = Path("config/schema_config.yaml").read_text(encoding="utf-8")
 
     assert "input_label: protein" in schema_text
-    assert "input_label: protein_protein_interaction" in schema_text
+    assert "input_label: post_translational" in schema_text
+    assert "input_label: transcriptional" in schema_text
+    assert "input_label: post_transcriptional" in schema_text
+    assert "input_label: mirna_transcriptional" in schema_text
+    assert "input_label: lncrna_post_transcriptional" in schema_text
+    assert "input_label: small_molecule_protein" in schema_text
     assert "original_id: str" in schema_text
 
 
@@ -94,7 +119,7 @@ def test_long_non_protein_ids_are_stably_hashed(sample_networks_tsv: Path) -> No
             OmnipathAdapterProteinField.ENTITY_TYPE,
             OmnipathAdapterProteinField.ORIGINAL_ID,
         ],
-        edge_types=[OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION],
+        edge_types=[OmnipathAdapterEdgeType.POST_TRANSLATIONAL],
         file_path=str(sample_networks_tsv),
     )
 

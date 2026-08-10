@@ -2,19 +2,25 @@ import hashlib
 import re
 from enum import Enum, auto
 from itertools import chain
-from typing import Optional
 
 import pandas as pd
 from biocypher._logger import logger
 
 from omnipath_secondary_adapter.models import NetworksPanderaModel
 
-
 logger.debug(f"Loading module {__name__}.")
 
 MAX_IMPORT_ID_LENGTH = 128
 HASH_DIGEST_LENGTH = 24
 PROTEIN_ENTITY_TYPE = "protein"
+EDGE_LABELS = {
+    "post_translational",
+    "transcriptional",
+    "post_transcriptional",
+    "mirna_transcriptional",
+    "lncrna_post_transcriptional",
+    "small_molecule_protein",
+}
 
 
 def normalise_entity_type(entity_type: object) -> str:
@@ -57,7 +63,12 @@ class OmnipathAdapterEdgeType(Enum):
     Enum for the types of the protein adapter.
     """
 
-    PROTEIN_PROTEIN_INTERACTION = "protein_protein_interaction"
+    POST_TRANSLATIONAL = "post_translational"
+    TRANSCRIPTIONAL = "transcriptional"
+    POST_TRANSCRIPTIONAL = "post_transcriptional"
+    MIRNA_TRANSCRIPTIONAL = "mirna_transcriptional"
+    LNCRNA_POST_TRANSCRIPTIONAL = "lncrna_post_transcriptional"
+    SMALL_MOLECULE_PROTEIN = "small_molecule_protein"
 
 
 class OmnipathAdapterProteinProteinEdgeField(Enum):
@@ -71,7 +82,27 @@ class OmnipathAdapterProteinProteinEdgeField(Enum):
     CONSENSUS_DIRECTION = "consensus_direction"
     CONSENSUS_STIMULATION = "consensus_stimulation"
     CONSENSUS_INHIBITION = "consensus_inhibition"
+    SOURCES = "sources"
+    REFERENCES = "references"
+    OMNIPATH = "omnipath"
+    KINASEEXTRA = "kinaseextra"
+    LIGRECEXTRA = "ligrecextra"
+    PATHWAYEXTRA = "pathwayextra"
+    DOROTHEA = "dorothea"
+    COLLECTRI = "collectri"
+    TF_TARGET = "tf_target"
+    LNCRNA_MRNA = "lncrna_mrna"
+    TF_MIRNA = "tf_mirna"
+    SMALL_MOLECULE = "small_molecule"
+    DOROTHEA_CURATED = "dorothea_curated"
+    DOROTHEA_CHIPSEQ = "dorothea_chipseq"
+    DOROTHEA_TFBS = "dorothea_tfbs"
+    DOROTHEA_COEXP = "dorothea_coexp"
+    DOROTHEA_LEVEL = "dorothea_level"
     INTERACTION_TYPE = "type"
+    CURATION_EFFORT = "curation_effort"
+    EXTRA_ATTRS = "extra_attrs"
+    EVIDENCES = "evidences"
 
 
 # ====================================================================================
@@ -91,11 +122,11 @@ class OmnipathAdapter:
 
     def __init__(
         self,
-        node_types: Optional[list] = None,
-        node_fields: Optional[list] = None,
-        edge_types: Optional[list] = None,
-        edge_fields: Optional[list] = None,
-        file_path: str = None,
+        node_types: list | None = None,
+        node_fields: list | None = None,
+        edge_types: list | None = None,
+        edge_fields: list | None = None,
+        file_path: str | None = None,
     ):
         self.file_path = file_path
         self._set_types_and_fields(
@@ -116,7 +147,7 @@ class OmnipathAdapter:
         schema_model = NetworksPanderaModel
 
         if schema_model is None:
-            logger.warning(f"No schema model found!")
+            logger.warning("No schema model found!")
 
         try:
             self.data = pd.read_table(
@@ -185,11 +216,10 @@ class OmnipathAdapter:
         if not hasattr(self, "nodes"):
             self.nodes = set()
 
-        if OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION not in self.edge_types:
-            return
-
         for row in self.data.itertuples(index=False):
             edge = ProteinProteinInteractions(fields=self.edge_fields, row=row)
+            if OmnipathAdapterEdgeType(edge.get_label()) not in self.edge_types:
+                continue
             yield (
                 edge.get_id(),
                 edge.get_source_id(),
@@ -270,7 +300,7 @@ class Protein(Node):
     Generates instances of proteins.
     """
 
-    def __init__(self, fields: Optional[list] = None, row=None, column_id=None):
+    def __init__(self, fields: list | None = None, row=None, column_id=None):
         self.fields = fields
         self.row = row
         self.column_id = column_id
@@ -291,19 +321,16 @@ class Protein(Node):
         properties = {}
 
         if self.column_id == "source":
-
             if (
                 self.fields is not None
                 and OmnipathAdapterProteinField.GENESYMBOL in self.fields
             ):
-
                 properties["genesymbol"] = self.row.source_genesymbol
 
             if (
                 self.fields is not None
                 and OmnipathAdapterProteinField.NCBI_TAX_ID in self.fields
             ):
-
                 properties["ncbi_tax_id"] = self.row.ncbi_tax_id_source
 
             if (
@@ -319,19 +346,16 @@ class Protein(Node):
                 properties["original_id"] = self.row.source
 
         if self.column_id == "target":
-
             if (
                 self.fields is not None
                 and OmnipathAdapterProteinField.GENESYMBOL in self.fields
             ):
-
                 properties["genesymbol"] = self.row.target_genesymbol
 
             if (
                 self.fields is not None
                 and OmnipathAdapterProteinField.NCBI_TAX_ID in self.fields
             ):
-
                 properties["ncbi_tax_id"] = self.row.ncbi_tax_id_target
 
             if (
@@ -366,7 +390,7 @@ class Edge:
         Returns the node id.
         """
 
-        return "RELID_" + self.source_id + "_" + self.target_id
+        return "RELID_" + self.source_id + "_" + self.target_id + "_" + self.label
 
     def get_source_id(self):
         """
@@ -398,21 +422,27 @@ class ProteinProteinInteractions(Edge):
     Generates instances of ProteinProteinInteractions.
     """
 
-    def __init__(self, fields: Optional[list] = None, row=None):
+    def __init__(self, fields: list | None = None, row=None):
         self.fields = fields
         self.row = row
         self.source_id = self._generate_source_id()
         self.target_id = self._generate_target_id()
+        self.label = self._generate_label()
         self.id = self._generate_id()
-        self.label = "protein_protein_interaction"
         self.properties = self._generate_properties()
 
     def _generate_id(self):
         """
-        Generate a random UniProt-style id.
+        Generate a typed relationship id.
         """
 
-        return "RELID_" + self.source_id + "_" + self.target_id
+        return "RELID_" + self.source_id + "_" + self.target_id + "_" + self.label
+
+    def _generate_label(self):
+        label = str(self.row.type)
+        if label not in EDGE_LABELS:
+            raise ValueError(f"Unsupported OmniPath interaction type: {label}")
+        return label
 
     def _generate_source_id(self):
         """
@@ -451,7 +481,8 @@ class ProteinProteinInteractions(Edge):
             properties["is_inhibition"] = self.row.is_inhibition
         if (
             self.fields is not None
-            and OmnipathAdapterProteinProteinEdgeField.CONSENSUS_DIRECTION in self.fields
+            and OmnipathAdapterProteinProteinEdgeField.CONSENSUS_DIRECTION
+            in self.fields
         ):
             properties["consensus_direction"] = self.row.consensus_direction
         if (
@@ -462,13 +493,115 @@ class ProteinProteinInteractions(Edge):
             properties["consensus_stimulation"] = self.row.consensus_stimulation
         if (
             self.fields is not None
-            and OmnipathAdapterProteinProteinEdgeField.CONSENSUS_INHIBITION in self.fields
+            and OmnipathAdapterProteinProteinEdgeField.CONSENSUS_INHIBITION
+            in self.fields
         ):
             properties["consensus_inhibition"] = self.row.consensus_inhibition
+
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.SOURCES in self.fields
+        ):
+            properties["sources"] = self.row.sources
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.REFERENCES in self.fields
+        ):
+            properties["references"] = self.row.references
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.OMNIPATH in self.fields
+        ):
+            properties["omnipath"] = self.row.omnipath
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.KINASEEXTRA in self.fields
+        ):
+            properties["kinaseextra"] = self.row.kinaseextra
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.LIGRECEXTRA in self.fields
+        ):
+            properties["ligrecextra"] = self.row.ligrecextra
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.PATHWAYEXTRA in self.fields
+        ):
+            properties["pathwayextra"] = self.row.pathwayextra
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.DOROTHEA in self.fields
+        ):
+            properties["dorothea"] = self.row.dorothea
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.COLLECTRI in self.fields
+        ):
+            properties["collectri"] = self.row.collectri
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.TF_TARGET in self.fields
+        ):
+            properties["tf_target"] = self.row.tf_target
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.LNCRNA_MRNA in self.fields
+        ):
+            properties["lncrna_mrna"] = self.row.lncrna_mrna
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.TF_MIRNA in self.fields
+        ):
+            properties["tf_mirna"] = self.row.tf_mirna
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.SMALL_MOLECULE in self.fields
+        ):
+            properties["small_molecule"] = self.row.small_molecule
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.DOROTHEA_CURATED in self.fields
+        ):
+            properties["dorothea_curated"] = self.row.dorothea_curated
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.DOROTHEA_CHIPSEQ in self.fields
+        ):
+            properties["dorothea_chipseq"] = self.row.dorothea_chipseq
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.DOROTHEA_TFBS in self.fields
+        ):
+            properties["dorothea_tfbs"] = self.row.dorothea_tfbs
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.DOROTHEA_COEXP in self.fields
+        ):
+            properties["dorothea_coexp"] = self.row.dorothea_coexp
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.DOROTHEA_LEVEL in self.fields
+        ):
+            properties["dorothea_level"] = self.row.dorothea_level
         if (
             self.fields is not None
             and OmnipathAdapterProteinProteinEdgeField.INTERACTION_TYPE in self.fields
         ):
-            properties["interaction_type"] = self.row.type
+            properties["type"] = self.row.type
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.CURATION_EFFORT in self.fields
+        ):
+            properties["curation_effort"] = self.row.curation_effort
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.EXTRA_ATTRS in self.fields
+        ):
+            properties["extra_attrs"] = self.row.extra_attrs
+        if (
+            self.fields is not None
+            and OmnipathAdapterProteinProteinEdgeField.EVIDENCES in self.fields
+        ):
+            properties["evidences"] = self.row.evidences
 
         return properties

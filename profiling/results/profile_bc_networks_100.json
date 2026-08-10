@@ -1,0 +1,55 @@
+{
+  "input_file": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/data/interactions_sampled/interactions_sampled_100.tsv.gz",
+  "row_count": "100",
+  "elapsed_seconds": 0.7980787740088999,
+  "profile_report_path": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/results/profile_bc_networks_100.txt",
+  "biocypher_output_dir": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-out/20260810160628",
+  "biocypher_log_path": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-log/biocypher-20260810-160627.log",
+  "graph_counts": {
+    "nodes": 190,
+    "edges": 100,
+    "nodes_by_label": {
+      "protein": 190
+    },
+    "edges_by_label": {
+      "post_transcriptional": 1,
+      "post_translational": 24,
+      "transcriptional": 75
+    }
+  },
+  "input_diagnostics": {
+    "input_rows": 100,
+    "node_mentions": 200,
+    "unique_nodes": 190,
+    "repeated_node_mentions": 10,
+    "input_edges": 100,
+    "unique_edges": 100,
+    "duplicate_edges": 0,
+    "messages": [
+      "Input contains 10 repeated node mentions that collapse into existing node records before BioCypher validation."
+    ]
+  },
+  "validation_messages": [
+    "No duplicate nodes in input.",
+    "No duplicate edges in input.",
+    "No missing labels in input."
+  ],
+  "biocypher_validation": {
+    "duplicate_nodes": false,
+    "duplicate_edges": false,
+    "missing_labels": false,
+    "bad_relationships": false,
+    "import_failed": false,
+    "warnings": [],
+    "status_messages": [
+      "No duplicate nodes in input.",
+      "No duplicate edges in input.",
+      "No missing labels in input."
+    ],
+    "raw_messages": [
+      "No duplicate nodes in input.",
+      "No duplicate edges in input.",
+      "No missing labels in input."
+    ]
+  }
+}

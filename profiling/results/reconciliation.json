@@ -1,0 +1,280 @@
+{
+  "input_file": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/data/interactions_sampled/interactions_sampled_1000000.tsv.gz",
+  "biocypher_output_dir": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-out/20260810160702",
+  "node_reconciliation": {
+    "raw_node_mentions": 2000000,
+    "unique_raw_nodes": 54680,
+    "final_nodes": 54680,
+    "collapsed_node_mentions": 1945320,
+    "nodes_with_repeated_mentions": 51380,
+    "nodes_with_property_conflicts": 25,
+    "nodes_with_all_raw_property_values_preserved": 0,
+    "property_conflict_counts": {
+      "genesymbol": 23,
+      "ncbi_tax_id": 2,
+      "entity_type": 0
+    },
+    "top_repeated_nodes": [
+      {
+        "node_id": "P49711",
+        "mentions": 7468,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "Q61164",
+        "mentions": 6864,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "A0A8I5ZMQ8",
+        "mentions": 6731,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "P18146",
+        "mentions": 5939,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "P42224",
+        "mentions": 5891,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "Q92754",
+        "mentions": 5852,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "A0A0H2UHR3",
+        "mentions": 5468,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "A0A087WSP5",
+        "mentions": 5455,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "P49715",
+        "mentions": 5446,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "P08046",
+        "mentions": 5379,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "Q61312",
+        "mentions": 5351,
+        "roles": [
+          "source",
+          "target"
+        ]
+      },
+      {
+        "node_id": "A0A8I5XWF9",
+        "mentions": 5344,
+        "roles": [
+          "source",
+          "target"
+        ]
+      }
+    ],
+    "merged_property_examples": [
+      {
+        "node_id": "P01562",
+        "mentions": 142,
+        "property": "genesymbol",
+        "raw_values": [
+          "IFNA1",
+          "IFNA13"
+        ],
+        "final_values": [
+          "IFNA13"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P68431",
+        "mentions": 109,
+        "property": "genesymbol",
+        "raw_values": [
+          "H3C11",
+          "H3C3"
+        ],
+        "final_values": [
+          "H3C3"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P62805",
+        "mentions": 102,
+        "property": "genesymbol",
+        "raw_values": [
+          "H4C14",
+          "H4C9"
+        ],
+        "final_values": [
+          "H4C9"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P84243",
+        "mentions": 77,
+        "property": "genesymbol",
+        "raw_values": [
+          "H3-3A",
+          "H3-3B"
+        ],
+        "final_values": [
+          "H3-3B"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "Q16637",
+        "mentions": 68,
+        "property": "genesymbol",
+        "raw_values": [
+          "SMN1",
+          "SMN2"
+        ],
+        "final_values": [
+          "SMN1"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "3385",
+        "mentions": 67,
+        "property": "ncbi_tax_id",
+        "raw_values": [
+          "-1",
+          "9606"
+        ],
+        "final_values": [
+          "9606"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "O15263",
+        "mentions": 54,
+        "property": "genesymbol",
+        "raw_values": [
+          "DEFB4A",
+          "DEFB4B"
+        ],
+        "final_values": [
+          "DEFB4A"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P47929",
+        "mentions": 42,
+        "property": "genesymbol",
+        "raw_values": [
+          "LGALS7",
+          "LGALS7B"
+        ],
+        "final_values": [
+          "LGALS7B"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P04908",
+        "mentions": 31,
+        "property": "genesymbol",
+        "raw_values": [
+          "H2AC4",
+          "H2AC8"
+        ],
+        "final_values": [
+          "H2AC8"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P0C0S8",
+        "mentions": 30,
+        "property": "genesymbol",
+        "raw_values": [
+          "H2AC11",
+          "H2AC17"
+        ],
+        "final_values": [
+          "H2AC17"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P0DN86",
+        "mentions": 29,
+        "property": "genesymbol",
+        "raw_values": [
+          "CGB3",
+          "CGB5"
+        ],
+        "final_values": [
+          "CGB3"
+        ],
+        "merged_all_raw_values": false
+      },
+      {
+        "node_id": "P62807",
+        "mentions": 25,
+        "property": "genesymbol",
+        "raw_values": [
+          "H2BC6",
+          "H2BC8"
+        ],
+        "final_values": [
+          "H2BC6"
+        ],
+        "merged_all_raw_values": false
+      }
+    ]
+  },
+  "edge_reconciliation": {
+    "input_edges": 1000000,
+    "unique_input_edges": 1000000,
+    "duplicate_input_edges": 0,
+    "final_edges": 1000000
+  }
+}

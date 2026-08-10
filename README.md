@@ -143,6 +143,43 @@ and keeps only meaningful warnings in the findings section. Log metadata and
 BioCypher section headers remain available in the JSON `raw_messages`, but they
 are not shown as validation findings.
 
+## Adapter Comparison
+
+The Ontoweaver repository is treated as the reference graph definition. The
+plain adapter uses the same OmniPath interaction edge labels as the Ontoweaver
+mapping while keeping import-safe stable node IDs. For semantic comparison, use
+`original_id` where the plain adapter hashes long or non-protein identifiers.
+
+Profile the Ontoweaver adapter from its repository:
+
+```bash
+cd /home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter
+poetry run python -m scripts.profile_knowledge_graphs
+poetry run python -m scripts.summarize_profile_results
+```
+
+Then profile and summarize the plain adapter from this repository:
+
+```bash
+uv run python -m scripts.profile_knowledge_graphs
+uv run python -m scripts.summarize_profile_results
+```
+
+To verify reconciliation differences, run the reconciliation analyzer in each
+repository after profiling:
+
+```bash
+# plain BioCypher adapter
+uv run python -m scripts.analyze_reconciliation
+
+# Ontoweaver adapter
+cd /home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter
+poetry run python -m scripts.analyze_reconciliation
+```
+
+Each run writes `profiling/results/reconciliation.md` and
+`profiling/results/reconciliation.json` in its own repository.
+
 ## Tests
 
 ```bash

@@ -1,0 +1,58 @@
+{
+  "input_file": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/data/interactions_sampled/interactions_sampled_10000.tsv.gz",
+  "row_count": "10000",
+  "elapsed_seconds": 1.9933847219217569,
+  "profile_report_path": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/profiling/results/profile_bc_networks_10000.txt",
+  "biocypher_output_dir": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-out/20260810160630",
+  "biocypher_log_path": "/home/ecarreno/SSC-Projects/b_REPOSITORIES/ecarrenolozano/omnipath-secondary-adapter-plain/biocypher-log/biocypher-20260810-160627.log",
+  "graph_counts": {
+    "nodes": 10162,
+    "edges": 10000,
+    "nodes_by_label": {
+      "protein": 10162
+    },
+    "edges_by_label": {
+      "lncrna_post_transcriptional": 1,
+      "mirna_transcriptional": 5,
+      "post_transcriptional": 67,
+      "post_translational": 2091,
+      "small_molecule_protein": 30,
+      "transcriptional": 7806
+    }
+  },
+  "input_diagnostics": {
+    "input_rows": 10000,
+    "node_mentions": 20000,
+    "unique_nodes": 10162,
+    "repeated_node_mentions": 9838,
+    "input_edges": 10000,
+    "unique_edges": 10000,
+    "duplicate_edges": 0,
+    "messages": [
+      "Input contains 9838 repeated node mentions that collapse into existing node records before BioCypher validation."
+    ]
+  },
+  "validation_messages": [
+    "No duplicate nodes in input.",
+    "No duplicate edges in input.",
+    "No missing labels in input."
+  ],
+  "biocypher_validation": {
+    "duplicate_nodes": false,
+    "duplicate_edges": false,
+    "missing_labels": false,
+    "bad_relationships": false,
+    "import_failed": false,
+    "warnings": [],
+    "status_messages": [
+      "No duplicate nodes in input.",
+      "No duplicate edges in input.",
+      "No missing labels in input."
+    ],
+    "raw_messages": [
+      "No duplicate nodes in input.",
+      "No duplicate edges in input.",
+      "No missing labels in input."
+    ]
+  }
+}
