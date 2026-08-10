@@ -16,4 +16,5 @@ neo4j:
   array_delimiter: "|"
   skip_duplicate_nodes: true
   skip_bad_relationships: true
-  import_call_bin_prefix: /bin/  # path to "neo4j-admin"
+  edge_labels_order: Leaves
+  import_call_bin_prefix: "/home/ecarreno/.config/neo4j-desktop/Application/Data/dbmss/dbms-07a1917c-3c99-4b82-a992-543fef256452/bin/"  # path to "neo4j-admin"

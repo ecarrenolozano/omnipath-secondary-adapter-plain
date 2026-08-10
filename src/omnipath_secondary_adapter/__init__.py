@@ -1,0 +1,1 @@
+"""OmniPath secondary adapter package."""

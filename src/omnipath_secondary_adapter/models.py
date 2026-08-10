@@ -56,7 +56,7 @@ class BasePanderaModel(pa.DataFrameModel):
         return dtypes
 
     class Config:
-        strict = True
+        strict = False
         coerce = False  # Redundancy here is intended, to force the type conversion.
 
 

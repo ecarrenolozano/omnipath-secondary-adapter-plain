@@ -1,16 +1,15 @@
-import pandas as pd
+from __future__ import annotations
 
-from biocypher import (
-    BioCypher,
-    FileDownload,
-)
-from biocypher._get import (
-    Downloader,
-)
+import argparse
+from pathlib import Path
+
+from biocypher import BioCypher, FileDownload
+from biocypher._get import Downloader
+
 from omnipath_secondary_adapter.adapters.adapter_omnipath_networks import (
     OmnipathAdapter,
-    OmnipathAdapterNodeType,
     OmnipathAdapterEdgeType,
+    OmnipathAdapterNodeType,
     OmnipathAdapterProteinField,
     OmnipathAdapterProteinProteinEdgeField,
 )
@@ -19,79 +18,75 @@ URLS_OMNIPATH_NETWORKS = {
     "networks": "https://archive.omnipathdb.org/omnipath_webservice_interactions__latest.tsv.gz",
 }
 
-CACHE_DATA_PATH = "./data"
-
-# -----------------------
-# Step 1. Data download
-
-bc = BioCypher()
-
-# Define the directory where the data will be store
-cache_directory = CACHE_DATA_PATH
-
-# Instantiate the Downloader class
-downloader = Downloader(cache_dir=cache_directory)
-
-networks_omnipath = FileDownload(
-    name="omnipath_networks",  # Name of the resource
-    url_s=URLS_OMNIPATH_NETWORKS.get("networks"),  # URL to the resource(s)
-    lifetime=7,  # seven days cache lifetime
-)
-paths = downloader.download(networks_omnipath)
-
-# paths = ["data/subset_networks_1000000.tsv"]
-# paths = ["data/subset_interactions_edgecases.tsv"]
-print(paths)
+CACHE_DATA_PATH = Path("data")
 
 
-# You can use the list of paths returned to read the resource into your adapter
-
-# Choose node types to include in the knowledge graph.
-# These are defined in the adapter (`adapter.py`).
-node_types = [
-    OmnipathAdapterNodeType.PROTEIN,
-]
-
-# Choose protein adapter fields to include in the knowledge graph.
-# These are defined in the adapter (`adapter.py`).
-node_fields = [
-    # Proteins properties
-    OmnipathAdapterProteinField.GENESYMBOL,
-    OmnipathAdapterProteinField.ENTITY_TYPE,
-    OmnipathAdapterProteinField.NCBI_TAX_ID,
-]
-
-edge_types = [
-    OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION,
-]
-
-edge_fields = [
-    # Proteins Protein properties
-    OmnipathAdapterProteinProteinEdgeField.IS_DIRECTED,
-    OmnipathAdapterProteinProteinEdgeField.IS_INHIBITION,
-    OmnipathAdapterProteinProteinEdgeField.IS_STIMULATION,
-]
+def download_omnipath_networks(cache_directory: Path = CACHE_DATA_PATH) -> Path:
+    downloader = Downloader(cache_dir=str(cache_directory))
+    networks_omnipath = FileDownload(
+        name="omnipath_networks",
+        url_s=URLS_OMNIPATH_NETWORKS["networks"],
+        lifetime=7,
+    )
+    paths = downloader.download(networks_omnipath)
+    return Path(paths[0])
 
 
-# Create a protein adapter instance
-adapter = OmnipathAdapter(
-    node_types=node_types,
-    node_fields=node_fields,
-    edge_types=edge_types,
-    #edge_fields=edge_fields,
-    file_path=paths[0],
-)
+def build_knowledge_graph(input_file: Path | None = None) -> None:
+    input_path = input_file or download_omnipath_networks()
+    print(f"Building knowledge graph from {input_path}")
+
+    bc = BioCypher()
+
+    node_types = [
+        OmnipathAdapterNodeType.PROTEIN,
+    ]
+    node_fields = [
+        OmnipathAdapterProteinField.GENESYMBOL,
+        OmnipathAdapterProteinField.ENTITY_TYPE,
+        OmnipathAdapterProteinField.NCBI_TAX_ID,
+        OmnipathAdapterProteinField.ORIGINAL_ID,
+    ]
+
+    edge_types = [
+        OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION,
+    ]
+    edge_fields = [
+        OmnipathAdapterProteinProteinEdgeField.IS_DIRECTED,
+        OmnipathAdapterProteinProteinEdgeField.IS_INHIBITION,
+        OmnipathAdapterProteinProteinEdgeField.IS_STIMULATION,
+        OmnipathAdapterProteinProteinEdgeField.CONSENSUS_DIRECTION,
+        OmnipathAdapterProteinProteinEdgeField.CONSENSUS_INHIBITION,
+        OmnipathAdapterProteinProteinEdgeField.CONSENSUS_STIMULATION,
+        OmnipathAdapterProteinProteinEdgeField.INTERACTION_TYPE,
+    ]
+
+    adapter = OmnipathAdapter(
+        node_types=node_types,
+        node_fields=node_fields,
+        edge_types=edge_types,
+        edge_fields=edge_fields,
+        file_path=str(input_path),
+    )
+
+    bc.write_nodes(adapter.get_nodes())
+    bc.write_edges(adapter.get_edges())
+    bc.write_import_call()
+    bc.summary()
 
 
-# Create a knowledge graph from the adapter
-bc.write_nodes(adapter.get_nodes())
-bc.write_edges(adapter.get_edges())
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Create a BioCypher knowledge graph from OmniPath interactions.",
+    )
+    parser.add_argument(
+        "--input-file",
+        type=Path,
+        help="Local OmniPath TSV file. If omitted, the latest OmniPath file is downloaded.",
+    )
+    return parser.parse_args()
 
-# Write admin import statement
-bc.write_import_call()
 
-# Print summary
-bc.summary()
-
-
-# Example profiling:  poetry run python -m cProfile -s time create_knowledge_graph.py > profile_10000.txt
+if __name__ == "__main__":
+    args = parse_args()
+    build_knowledge_graph(input_file=args.input_file)

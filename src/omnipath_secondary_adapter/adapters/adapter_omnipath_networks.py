@@ -1,5 +1,5 @@
-import random
-import string
+import hashlib
+import re
 from enum import Enum, auto
 from itertools import chain
 from typing import Optional
@@ -11,6 +11,26 @@ from omnipath_secondary_adapter.models import NetworksPanderaModel
 
 
 logger.debug(f"Loading module {__name__}.")
+
+MAX_IMPORT_ID_LENGTH = 128
+HASH_DIGEST_LENGTH = 24
+PROTEIN_ENTITY_TYPE = "protein"
+
+
+def normalise_entity_type(entity_type: object) -> str:
+    return str(entity_type).strip().lower()
+
+
+def stable_node_id(raw_id: object, entity_type: object) -> str:
+    raw_id = str(raw_id)
+    entity_type = normalise_entity_type(entity_type)
+
+    if entity_type == PROTEIN_ENTITY_TYPE and len(raw_id) <= MAX_IMPORT_ID_LENGTH:
+        return raw_id
+
+    digest = hashlib.sha256(raw_id.encode("utf-8")).hexdigest()[:HASH_DIGEST_LENGTH]
+    safe_entity_type = re.sub(r"[^a-z0-9]+", "_", entity_type).strip("_")
+    return f"omnipath:{safe_entity_type}:{digest}"
 
 
 class OmnipathAdapterNodeType(Enum):
@@ -29,6 +49,7 @@ class OmnipathAdapterProteinField(Enum):
     GENESYMBOL = "genesymbol"
     NCBI_TAX_ID = "ncbi_tax_id"
     ENTITY_TYPE = "entity_type"
+    ORIGINAL_ID = "original_id"
 
 
 class OmnipathAdapterEdgeType(Enum):
@@ -161,8 +182,8 @@ class OmnipathAdapter:
 
         logger.info("Generating edges.")
 
-        if not self.nodes:
-            raise ValueError("No nodes found. Please run get_nodes() first.")
+        if not hasattr(self, "nodes"):
+            self.nodes = set()
 
         if OmnipathAdapterEdgeType.PROTEIN_PROTEIN_INTERACTION not in self.edge_types:
             return
@@ -259,12 +280,12 @@ class Protein(Node):
 
     def _generate_id(self):
         """
-        Generate a random UniProt-style id.
+        Generate an import-safe id.
         """
         if self.column_id == "source":
-            return str(self.row.source)
+            return stable_node_id(self.row.source, self.row.entity_type_source)
         if self.column_id == "target":
-            return str(self.row.target)
+            return stable_node_id(self.row.target, self.row.entity_type_target)
 
     def _generate_properties(self):
         properties = {}
@@ -291,6 +312,12 @@ class Protein(Node):
             ):
                 properties["entity_type"] = self.row.entity_type_source
 
+            if (
+                self.fields is not None
+                and OmnipathAdapterProteinField.ORIGINAL_ID in self.fields
+            ):
+                properties["original_id"] = self.row.source
+
         if self.column_id == "target":
 
             if (
@@ -312,6 +339,12 @@ class Protein(Node):
                 and OmnipathAdapterProteinField.ENTITY_TYPE in self.fields
             ):
                 properties["entity_type"] = self.row.entity_type_target
+
+            if (
+                self.fields is not None
+                and OmnipathAdapterProteinField.ORIGINAL_ID in self.fields
+            ):
+                properties["original_id"] = self.row.target
 
         return properties
 
@@ -368,9 +401,9 @@ class ProteinProteinInteractions(Edge):
     def __init__(self, fields: Optional[list] = None, row=None):
         self.fields = fields
         self.row = row
-        self.id = self._generate_id()
         self.source_id = self._generate_source_id()
         self.target_id = self._generate_target_id()
+        self.id = self._generate_id()
         self.label = "protein_protein_interaction"
         self.properties = self._generate_properties()
 
@@ -379,21 +412,21 @@ class ProteinProteinInteractions(Edge):
         Generate a random UniProt-style id.
         """
 
-        return str(self.row.source)
+        return "RELID_" + self.source_id + "_" + self.target_id
 
     def _generate_source_id(self):
         """
-        Generate a random UniProt-style id.
+        Generate an import-safe source id.
         """
 
-        return str(self.row.source)
+        return stable_node_id(self.row.source, self.row.entity_type_source)
 
     def _generate_target_id(self):
         """
-        Generate a random UniProt-style id.
+        Generate an import-safe target id.
         """
 
-        return str(self.row.target)
+        return stable_node_id(self.row.target, self.row.entity_type_target)
 
     def _generate_properties(self):
         properties = {}
@@ -439,5 +472,3 @@ class ProteinProteinInteractions(Edge):
             properties["interaction_type"] = self.row.type
 
         return properties
-
-    CONSENSUS_INHIBITION = "consensus_inhibition"

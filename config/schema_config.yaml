@@ -8,6 +8,7 @@ protein:
         genesymbol: str
         ncbi_tax_id: int
         entity_type: str
+        original_id: str
 
 
 #--------------------  Information about Edges
