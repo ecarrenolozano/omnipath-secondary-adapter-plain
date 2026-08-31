@@ -1165,267 +1165,6 @@
     },
     {
       "@type": "sc:Dataset",
-      "name": "intercell",
-      "description": "The Intercell table in the OmniPath database provides annotations detailing the roles of proteins in intercellular communication, such as ligands, receptors, extracellular matrix components, etc.",
-      "conformsTo": "http://mlcommons.org/croissant/1.1",
-      "citeAs": "https://saezlab.org/",
-      "creator": [
-        {
-          "@type": "sc:Organization",
-          "name": "saezlab"
-        }
-      ],
-      "license": "https://opensource.org/licenses/MIT",
-      "version": "1.0.0",
-      "distribution": [
-        {
-          "@type": "cr:FileObject",
-          "@id": "intercell-4/file_0",
-          "name": "omnipath_webservice_intercell__latest.tsv.gz",
-          "contentSize": "6419866",
-          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_intercell__latest.tsv.gz",
-          "encodingFormat": "application/gzip",
-          "sha256": "f04a3a62a04478c15a8179f4ca13d1d15a84e220a4cd2050abae19960d7ff7c1"
-        }
-      ],
-      "recordSet": [
-        {
-          "@type": "cr:RecordSet",
-          "@id": "intercell-4/omnipath_webservice_intercell__latest",
-          "name": "intercell-4/omnipath_webservice_intercell__latest",
-          "description": "Records from omnipath_webservice_intercell__latest.tsv.gz",
-          "field": [
-            {
-              "@type": "cr:Field",
-              "name": "category",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/category",
-              "dataType": "sc:Text",
-              "description": "Column 'category' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "category"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "parent",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/parent",
-              "dataType": "sc:Text",
-              "description": "Column 'parent' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "parent"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "database",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/database",
-              "dataType": "sc:Text",
-              "description": "Column 'database' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "database"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "scope",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/scope",
-              "dataType": "sc:Text",
-              "description": "Column 'scope' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "scope"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "aspect",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/aspect",
-              "dataType": "sc:Text",
-              "description": "Column 'aspect' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "aspect"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "source",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/source",
-              "dataType": "sc:Text",
-              "description": "Column 'source' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "source"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "uniprot",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/uniprot",
-              "dataType": "sc:Text",
-              "description": "Column 'uniprot' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "uniprot"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "genesymbol",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/genesymbol",
-              "dataType": "sc:Text",
-              "description": "Column 'genesymbol' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "genesymbol"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "entity_type",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/entity_type",
-              "dataType": "sc:Text",
-              "description": "Column 'entity_type' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "entity_type"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "consensus_score",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/consensus_score",
-              "dataType": "cr:Int64",
-              "description": "Column 'consensus_score' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "consensus_score"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "transmitter",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/transmitter",
-              "dataType": "sc:Boolean",
-              "description": "Column 'transmitter' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "transmitter"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "receiver",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/receiver",
-              "dataType": "sc:Boolean",
-              "description": "Column 'receiver' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "receiver"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "secreted",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/secreted",
-              "dataType": "sc:Boolean",
-              "description": "Column 'secreted' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "secreted"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "plasma_membrane_transmembrane",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/plasma_membrane_transmembrane",
-              "dataType": "sc:Boolean",
-              "description": "Column 'plasma_membrane_transmembrane' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "plasma_membrane_transmembrane"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "plasma_membrane_peripheral",
-              "@id": "intercell-4/omnipath_webservice_intercell__latest/plasma_membrane_peripheral",
-              "dataType": "sc:Boolean",
-              "description": "Column 'plasma_membrane_peripheral' from omnipath_webservice_intercell__latest.tsv.gz",
-              "source": {
-                "fileObject": {
-                  "@id": "intercell-4/file_0"
-                },
-                "extract": {
-                  "column": "plasma_membrane_peripheral"
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "@type": "sc:Dataset",
       "name": "Annotations",
       "description": "Table that provides detailed information about various properties of proteins and genes, such as function, localization, expression, and structure. This data is sourced from multiple resources and is essential for understanding the roles and characteristics of different molecular entities.",
       "conformsTo": "http://mlcommons.org/croissant/1.0",
@@ -1444,7 +1183,7 @@
       "distribution": [
         {
           "@type": "cr:FileObject",
-          "@id": "annotations-5/file_0",
+          "@id": "annotations-4/file_0",
           "name": "omnipath_webservice_annotations__latest.tsv.gz",
           "contentSize": "227101918",
           "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_annotations__latest.tsv.gz",
@@ -1455,20 +1194,20 @@
       "recordSet": [
         {
           "@type": "cr:RecordSet",
-          "@id": "annotations-5/omnipath_webservice_annotations__latest",
-          "name": "annotations-5/omnipath_webservice_annotations__latest",
+          "@id": "annotations-4/omnipath_webservice_annotations__latest",
+          "name": "annotations-4/omnipath_webservice_annotations__latest",
           "description": "Records from omnipath_webservice_annotations__latest.tsv.gz",
           "field": [
             {
               "@type": "cr:Field",
               "name": "uniprot",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/uniprot",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/uniprot",
               "dataType": "sc:Text",
               "description": "Primary (reference) identifier of the molecular entity (UniProt for proteins).",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/uniprot/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/uniprot/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "uniprot"
@@ -1478,13 +1217,13 @@
             {
               "@type": "cr:Field",
               "name": "genesymbol",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/genesymbol",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/genesymbol",
               "dataType": "sc:Text",
               "description": "Human readable (label) identifier of the molecular entity (Gene Symbol for proteins).",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/genesymbol/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/genesymbol/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "genesymbol"
@@ -1494,13 +1233,13 @@
             {
               "@type": "cr:Field",
               "name": "entity_type",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/entity_type",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/entity_type",
               "dataType": "sc:Text",
               "description": "Type of the molecular entity (protein, complex, mirna, etc).",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/entity_type/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/entity_type/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "entity_type"
@@ -1510,13 +1249,13 @@
             {
               "@type": "cr:Field",
               "name": "source",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/source",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/source",
               "dataType": "sc:Text",
               "description": "Name of the original database (resource).",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/source/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/source/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "source"
@@ -1526,13 +1265,13 @@
             {
               "@type": "cr:Field",
               "name": "label",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/label",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/label",
               "dataType": "sc:Text",
               "description": "Name of the annotation variable.",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/label/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/label/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "label"
@@ -1542,13 +1281,13 @@
             {
               "@type": "cr:Field",
               "name": "value",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/value",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/value",
               "dataType": "sc:Text",
               "description": "Value of the annotation variable.",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/value/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/value/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "value"
@@ -1558,13 +1297,13 @@
             {
               "@type": "cr:Field",
               "name": "record_id",
-              "@id": "annotations-5/omnipath_webservice_annotations__latest/record_id",
+              "@id": "annotations-4/omnipath_webservice_annotations__latest/record_id",
               "dataType": "sc:Integer",
               "description": "Unique ID of the annotation record (within the \"source\").",
               "source": {
-                "@id": "annotations-5/omnipath_webservice_annotations__latest/record_id/source",
+                "@id": "annotations-4/omnipath_webservice_annotations__latest/record_id/source",
                 "fileObject": {
-                  "@id": "annotations-5/file_0"
+                  "@id": "annotations-4/file_0"
                 },
                 "extract": {
                   "column": "record_id"
