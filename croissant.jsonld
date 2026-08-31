@@ -49,24 +49,35 @@
   },
   "@type": "SoftwareSourceCode",
   "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalTool/1.0-RELEASE/",
-  "@id": "omnipath-biocypher-plain-adapter",
-  "name": "OmniPath BioCypher Plain Adapter",
-  "description": "A plain adapter to convert OmniPath data into Knowledge graphs.",
+  "@id": "omnipath-plain-adapter",
+  "name": "OmniPath Plain Adapter",
+  "description": "Adapter for omnipath information based just in BioCypher components",
   "version": "0.0.1",
   "license": "https://opensource.org/licenses/MIT",
   "codeRepository": "https://github.com/ecarrenolozano/omnipath-secondary-adapter-plain",
   "creator": [
     {
       "@type": "Person",
-      "name": "Edwin Carreño",
+      "name": "Edwin Carreno",
       "affiliation": "Scientific Software Center",
       "email": "edwin1892@gmail.com",
       "identifier": "0009000533592211"
+    },
+    {
+      "@type": "Person",
+      "name": "James Bowyer",
+      "affiliation": "Scientific Software Center"
+    },
+    {
+      "@type": "Organization",
+      "name": "Saezlab",
+      "affiliation": "UniKlinikum Heidelberg"
     }
   ],
   "keywords": [
-    "omnipath",
-    "biocypher"
+    "biocypher",
+    "adapter",
+    "plain"
   ],
   "hasPart": [
     {
@@ -74,160 +85,17 @@
       "name": "Complexes",
       "description": "Table in the OmniPath database provides a comprehensive dataset of protein complexes, integrating information from various resources.",
       "conformsTo": "http://mlcommons.org/croissant/1.0",
-      "datePublished": "2026-08-28T00:00:00",
-      "license": "UNKNOWN",
+      "datePublished": "2026-08-31T00:00:00",
+      "license": "No license",
       "url": "https://archive.omnipathdb.org/",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "distribution": [
         {
           "@type": "cr:FileObject",
           "@id": "complexes-1/file_0",
-          "name": "omnipath_webservice_complexes__latest.tsv.gz",
-          "contentSize": "1932194",
-          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_complexes__latest.tsv.gz",
-          "encodingFormat": "text/tab-separated-values",
-          "sha256": "4c0ff2c432dfae88cf2adba9dc09ee6f0ae8606bff000b97252147e733b01a6b"
-        }
-      ],
-      "recordSet": [
-        {
-          "@type": "cr:RecordSet",
-          "@id": "complexes-1/omnipath_webservice_complexes__latest",
-          "name": "complexes-1/omnipath_webservice_complexes__latest",
-          "description": "Records from omnipath_webservice_complexes__latest.tsv.gz",
-          "field": [
-            {
-              "@type": "cr:Field",
-              "name": "name",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/name",
-              "dataType": "sc:Text",
-              "description": "Column 'name' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/name/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "name"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "components",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/components",
-              "dataType": "sc:Text",
-              "description": "Column 'components' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/components/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "components"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "components_genesymbols",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/components_genesymbols",
-              "dataType": "sc:Text",
-              "description": "Column 'components_genesymbols' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/components_genesymbols/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "components_genesymbols"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "stoichiometry",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/stoichiometry",
-              "dataType": "sc:Text",
-              "description": "Column 'stoichiometry' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/stoichiometry/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "stoichiometry"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "sources",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/sources",
-              "dataType": "sc:Text",
-              "description": "Column 'sources' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/sources/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "sources"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "references",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/references",
-              "dataType": "sc:Text",
-              "description": "Column 'references' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/references/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "references"
-                }
-              }
-            },
-            {
-              "@type": "cr:Field",
-              "name": "identifiers",
-              "@id": "complexes-1/omnipath_webservice_complexes__latest/identifiers",
-              "dataType": "sc:Text",
-              "description": "Column 'identifiers' from omnipath_webservice_complexes__latest.tsv.gz",
-              "source": {
-                "@id": "complexes-1/omnipath_webservice_complexes__latest/identifiers/source",
-                "fileObject": {
-                  "@id": "complexes-1/file_0"
-                },
-                "extract": {
-                  "column": "identifiers"
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "@type": "sc:Dataset",
-      "name": "Enzyme PTM",
-      "description": "Table that catalogs relationships between enzymes and their substrates, focusing on post-translational modifications (PTMs). This dataset predominantly includes kinase-substrate interactions, along with acetylation and other PTM types.",
-      "conformsTo": "http://mlcommons.org/croissant/1.0",
-      "datePublished": "2026-08-28T00:00:00",
-      "license": "UNKNOWN",
-      "url": "https://archive.omnipathdb.org/",
-      "version": "0.0.1",
-      "distribution": [
-        {
-          "@type": "cr:FileObject",
-          "@id": "enzyme-ptm-2/file_0",
           "name": "omnipath_webservice_enz_sub__latest.tsv.gz",
           "contentSize": "2158245",
-          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_enz_sub__latest.tsv.gz",
+          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_complexes__latest.tsv.gz",
           "encodingFormat": "text/tab-separated-values",
           "sha256": "10c889259078136e5572a75783343000998e33040f7ed3037aed4d5a9ecab32a"
         }
@@ -235,20 +103,20 @@
       "recordSet": [
         {
           "@type": "cr:RecordSet",
-          "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest",
-          "name": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest",
+          "@id": "complexes-1/omnipath_webservice_enz_sub__latest",
+          "name": "complexes-1/omnipath_webservice_enz_sub__latest",
           "description": "Records from omnipath_webservice_enz_sub__latest.tsv.gz",
           "field": [
             {
               "@type": "cr:Field",
               "name": "enzyme",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/enzyme",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/enzyme",
               "dataType": "sc:Text",
               "description": "Column 'enzyme' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/enzyme/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/enzyme/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "enzyme"
@@ -258,13 +126,13 @@
             {
               "@type": "cr:Field",
               "name": "enzyme_genesymbol",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/enzyme_genesymbol",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/enzyme_genesymbol",
               "dataType": "sc:Text",
               "description": "Column 'enzyme_genesymbol' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/enzyme_genesymbol/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/enzyme_genesymbol/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "enzyme_genesymbol"
@@ -274,13 +142,13 @@
             {
               "@type": "cr:Field",
               "name": "substrate",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/substrate",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/substrate",
               "dataType": "sc:Text",
               "description": "Column 'substrate' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/substrate/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/substrate/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "substrate"
@@ -290,13 +158,13 @@
             {
               "@type": "cr:Field",
               "name": "substrate_genesymbol",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/substrate_genesymbol",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/substrate_genesymbol",
               "dataType": "sc:Text",
               "description": "Column 'substrate_genesymbol' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/substrate_genesymbol/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/substrate_genesymbol/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "substrate_genesymbol"
@@ -306,13 +174,13 @@
             {
               "@type": "cr:Field",
               "name": "isoforms",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/isoforms",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/isoforms",
               "dataType": "sc:Text",
               "description": "Column 'isoforms' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/isoforms/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/isoforms/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "isoforms"
@@ -322,13 +190,13 @@
             {
               "@type": "cr:Field",
               "name": "residue_type",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/residue_type",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/residue_type",
               "dataType": "sc:Text",
               "description": "Column 'residue_type' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/residue_type/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/residue_type/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "residue_type"
@@ -338,13 +206,13 @@
             {
               "@type": "cr:Field",
               "name": "residue_offset",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/residue_offset",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/residue_offset",
               "dataType": "sc:Integer",
               "description": "Column 'residue_offset' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/residue_offset/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/residue_offset/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "residue_offset"
@@ -354,13 +222,13 @@
             {
               "@type": "cr:Field",
               "name": "modification",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/modification",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/modification",
               "dataType": "sc:Text",
               "description": "Column 'modification' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/modification/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/modification/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "modification"
@@ -370,13 +238,13 @@
             {
               "@type": "cr:Field",
               "name": "sources",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/sources",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/sources",
               "dataType": "sc:Text",
               "description": "Column 'sources' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/sources/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/sources/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "sources"
@@ -386,13 +254,13 @@
             {
               "@type": "cr:Field",
               "name": "references",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/references",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/references",
               "dataType": "sc:Text",
               "description": "Column 'references' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/references/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/references/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "references"
@@ -402,13 +270,13 @@
             {
               "@type": "cr:Field",
               "name": "curation_effort",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/curation_effort",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/curation_effort",
               "dataType": "sc:Integer",
               "description": "Column 'curation_effort' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/curation_effort/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/curation_effort/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
                 },
                 "extract": {
                   "column": "curation_effort"
@@ -418,13 +286,243 @@
             {
               "@type": "cr:Field",
               "name": "ncbi_tax_id",
-              "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/ncbi_tax_id",
+              "@id": "complexes-1/omnipath_webservice_enz_sub__latest/ncbi_tax_id",
               "dataType": "sc:Integer",
               "description": "Column 'ncbi_tax_id' from omnipath_webservice_enz_sub__latest.tsv.gz",
               "source": {
-                "@id": "enzyme-ptm-2/omnipath_webservice_enz_sub__latest/ncbi_tax_id/source",
+                "@id": "complexes-1/omnipath_webservice_enz_sub__latest/ncbi_tax_id/source",
                 "fileObject": {
-                  "@id": "enzyme-ptm-2/file_0"
+                  "@id": "complexes-1/file_0"
+                },
+                "extract": {
+                  "column": "ncbi_tax_id"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "sc:Dataset",
+      "name": "Enzyme substrate",
+      "description": "Table that catalogs relationships between enzymes and their substrates, focusing on post-translational modifications (PTMs). This dataset predominantly includes kinase-substrate interactions, along with acetylation and other PTM types.",
+      "conformsTo": "http://mlcommons.org/croissant/1.0",
+      "creator": [
+        {
+          "@type": "sc:Organization",
+          "name": "Saezlab enzptm",
+          "url": "https://saezlab.org/"
+        }
+      ],
+      "datePublished": "2026-08-31T00:00:00",
+      "license": "No license",
+      "url": "https://archive.omnipathdb.org/",
+      "version": "0.1.0",
+      "distribution": [
+        {
+          "@type": "cr:FileObject",
+          "@id": "enzyme-substrate-2/file_0",
+          "name": "omnipath_webservice_enz_sub__latest.tsv.gz",
+          "contentSize": "2158245",
+          "contentUrl": ".",
+          "encodingFormat": "text/tab-separated-values",
+          "sha256": "10c889259078136e5572a75783343000998e33040f7ed3037aed4d5a9ecab32a"
+        }
+      ],
+      "recordSet": [
+        {
+          "@type": "cr:RecordSet",
+          "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest",
+          "name": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest",
+          "description": "Records from omnipath_webservice_enz_sub__latest.tsv.gz",
+          "field": [
+            {
+              "@type": "cr:Field",
+              "name": "enzyme",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/enzyme",
+              "dataType": "sc:Text",
+              "description": "Column 'enzyme' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/enzyme/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "enzyme"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "enzyme_genesymbol",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/enzyme_genesymbol",
+              "dataType": "sc:Text",
+              "description": "Column 'enzyme_genesymbol' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/enzyme_genesymbol/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "enzyme_genesymbol"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "substrate",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/substrate",
+              "dataType": "sc:Text",
+              "description": "Column 'substrate' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/substrate/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "substrate"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "substrate_genesymbol",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/substrate_genesymbol",
+              "dataType": "sc:Text",
+              "description": "Column 'substrate_genesymbol' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/substrate_genesymbol/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "substrate_genesymbol"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "isoforms",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/isoforms",
+              "dataType": "sc:Text",
+              "description": "Column 'isoforms' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/isoforms/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "isoforms"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "residue_type",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/residue_type",
+              "dataType": "sc:Text",
+              "description": "Column 'residue_type' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/residue_type/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "residue_type"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "residue_offset",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/residue_offset",
+              "dataType": "sc:Integer",
+              "description": "Column 'residue_offset' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/residue_offset/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "residue_offset"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "modification",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/modification",
+              "dataType": "sc:Text",
+              "description": "Column 'modification' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/modification/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "modification"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "sources",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/sources",
+              "dataType": "sc:Text",
+              "description": "Column 'sources' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/sources/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "sources"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "references",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/references",
+              "dataType": "sc:Text",
+              "description": "Column 'references' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/references/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "references"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "curation_effort",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/curation_effort",
+              "dataType": "sc:Integer",
+              "description": "Column 'curation_effort' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/curation_effort/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
+                },
+                "extract": {
+                  "column": "curation_effort"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "ncbi_tax_id",
+              "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/ncbi_tax_id",
+              "dataType": "sc:Integer",
+              "description": "Column 'ncbi_tax_id' from omnipath_webservice_enz_sub__latest.tsv.gz",
+              "source": {
+                "@id": "enzyme-substrate-2/omnipath_webservice_enz_sub__latest/ncbi_tax_id/source",
+                "fileObject": {
+                  "@id": "enzyme-substrate-2/file_0"
                 },
                 "extract": {
                   "column": "ncbi_tax_id"
@@ -440,17 +538,24 @@
       "name": "Interactions",
       "description": "Table that collects information related to the interactions between molecular entities.",
       "conformsTo": "http://mlcommons.org/croissant/1.0",
-      "datePublished": "2026-08-28T00:00:00",
-      "license": "UNKNOWN",
+      "creator": [
+        {
+          "@type": "sc:Organization",
+          "name": "Saezlab networks",
+          "url": "https://saezlab.org/"
+        }
+      ],
+      "datePublished": "2026-08-31T00:00:00",
+      "license": "No license",
       "url": "https://archive.omnipathdb.org/",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "distribution": [
         {
           "@type": "cr:FileObject",
           "@id": "interactions-3/file_0",
           "name": "omnipath_webservice_interactions__latest.tsv.gz",
           "contentSize": "94634603",
-          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_interactions__latest.tsv.gz",
+          "contentUrl": ".",
           "encodingFormat": "text/tab-separated-values",
           "sha256": "e1f2777f5ac7c10390402c442b54621b6fc3de761b531ab91b46330516875f3a"
         }
@@ -1060,13 +1165,18 @@
     },
     {
       "@type": "sc:Dataset",
-      "name": "Intercell",
+      "name": "intercell",
       "description": "The Intercell table in the OmniPath database provides annotations detailing the roles of proteins in intercellular communication, such as ligands, receptors, extracellular matrix components, etc.",
-      "conformsTo": "http://mlcommons.org/croissant/1.0",
-      "datePublished": "2026-08-28T00:00:00",
-      "license": "UNKNOWN",
-      "url": "https://archive.omnipathdb.org/",
-      "version": "0.0.1",
+      "conformsTo": "http://mlcommons.org/croissant/1.1",
+      "citeAs": "https://saezlab.org/",
+      "creator": [
+        {
+          "@type": "sc:Organization",
+          "name": "saezlab"
+        }
+      ],
+      "license": "https://opensource.org/licenses/MIT",
+      "version": "1.0.0",
       "distribution": [
         {
           "@type": "cr:FileObject",
@@ -1074,7 +1184,7 @@
           "name": "omnipath_webservice_intercell__latest.tsv.gz",
           "contentSize": "6419866",
           "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_intercell__latest.tsv.gz",
-          "encodingFormat": "text/tab-separated-values",
+          "encodingFormat": "application/gzip",
           "sha256": "f04a3a62a04478c15a8179f4ca13d1d15a84e220a4cd2050abae19960d7ff7c1"
         }
       ],
@@ -1092,7 +1202,6 @@
               "dataType": "sc:Text",
               "description": "Column 'category' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/category/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1108,7 +1217,6 @@
               "dataType": "sc:Text",
               "description": "Column 'parent' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/parent/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1124,7 +1232,6 @@
               "dataType": "sc:Text",
               "description": "Column 'database' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/database/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1140,7 +1247,6 @@
               "dataType": "sc:Text",
               "description": "Column 'scope' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/scope/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1156,7 +1262,6 @@
               "dataType": "sc:Text",
               "description": "Column 'aspect' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/aspect/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1172,7 +1277,6 @@
               "dataType": "sc:Text",
               "description": "Column 'source' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/source/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1188,7 +1292,6 @@
               "dataType": "sc:Text",
               "description": "Column 'uniprot' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/uniprot/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1204,7 +1307,6 @@
               "dataType": "sc:Text",
               "description": "Column 'genesymbol' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/genesymbol/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1220,7 +1322,6 @@
               "dataType": "sc:Text",
               "description": "Column 'entity_type' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/entity_type/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1233,10 +1334,9 @@
               "@type": "cr:Field",
               "name": "consensus_score",
               "@id": "intercell-4/omnipath_webservice_intercell__latest/consensus_score",
-              "dataType": "sc:Integer",
+              "dataType": "cr:Int64",
               "description": "Column 'consensus_score' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/consensus_score/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1252,7 +1352,6 @@
               "dataType": "sc:Boolean",
               "description": "Column 'transmitter' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/transmitter/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1268,7 +1367,6 @@
               "dataType": "sc:Boolean",
               "description": "Column 'receiver' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/receiver/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1284,7 +1382,6 @@
               "dataType": "sc:Boolean",
               "description": "Column 'secreted' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/secreted/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1300,7 +1397,6 @@
               "dataType": "sc:Boolean",
               "description": "Column 'plasma_membrane_transmembrane' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/plasma_membrane_transmembrane/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1316,7 +1412,6 @@
               "dataType": "sc:Boolean",
               "description": "Column 'plasma_membrane_peripheral' from omnipath_webservice_intercell__latest.tsv.gz",
               "source": {
-                "@id": "intercell-4/omnipath_webservice_intercell__latest/plasma_membrane_peripheral/source",
                 "fileObject": {
                   "@id": "intercell-4/file_0"
                 },
@@ -1334,8 +1429,16 @@
       "name": "Annotations",
       "description": "Table that provides detailed information about various properties of proteins and genes, such as function, localization, expression, and structure. This data is sourced from multiple resources and is essential for understanding the roles and characteristics of different molecular entities.",
       "conformsTo": "http://mlcommons.org/croissant/1.0",
-      "datePublished": "2026-08-28T00:00:00",
-      "license": "In repository as file/Custom",
+      "creator": [
+        {
+          "@type": "sc:Organization",
+          "name": "Saezlab team annotations",
+          "affiliation": "UniKlinikum Heidelberg",
+          "url": "https://saezlab.org/"
+        }
+      ],
+      "datePublished": "2026-08-31T00:00:00",
+      "license": "No license",
       "url": "https://archive.omnipathdb.org/",
       "version": "0.0.1",
       "distribution": [
@@ -1344,7 +1447,7 @@
           "@id": "annotations-5/file_0",
           "name": "omnipath_webservice_annotations__latest.tsv.gz",
           "contentSize": "227101918",
-          "contentUrl": ".",
+          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_annotations__latest.tsv.gz",
           "encodingFormat": "text/tab-separated-values",
           "sha256": "153fdf7488923ef1fa814d8eb118d09c8635a6cb837e6b6b8edb1e839069490a"
         }
@@ -1361,7 +1464,7 @@
               "name": "uniprot",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/uniprot",
               "dataType": "sc:Text",
-              "description": "Column 'uniprot' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Primary (reference) identifier of the molecular entity (UniProt for proteins).",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/uniprot/source",
                 "fileObject": {
@@ -1377,7 +1480,7 @@
               "name": "genesymbol",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/genesymbol",
               "dataType": "sc:Text",
-              "description": "Column 'genesymbol' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Human readable (label) identifier of the molecular entity (Gene Symbol for proteins).",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/genesymbol/source",
                 "fileObject": {
@@ -1393,7 +1496,7 @@
               "name": "entity_type",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/entity_type",
               "dataType": "sc:Text",
-              "description": "Column 'entity_type' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Type of the molecular entity (protein, complex, mirna, etc).",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/entity_type/source",
                 "fileObject": {
@@ -1409,7 +1512,7 @@
               "name": "source",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/source",
               "dataType": "sc:Text",
-              "description": "Column 'source' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Name of the original database (resource).",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/source/source",
                 "fileObject": {
@@ -1425,7 +1528,7 @@
               "name": "label",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/label",
               "dataType": "sc:Text",
-              "description": "Column 'label' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Name of the annotation variable.",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/label/source",
                 "fileObject": {
@@ -1441,7 +1544,7 @@
               "name": "value",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/value",
               "dataType": "sc:Text",
-              "description": "Column 'value' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Value of the annotation variable.",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/value/source",
                 "fileObject": {
@@ -1457,7 +1560,7 @@
               "name": "record_id",
               "@id": "annotations-5/omnipath_webservice_annotations__latest/record_id",
               "dataType": "sc:Integer",
-              "description": "Column 'record_id' from omnipath_webservice_annotations__latest.tsv.gz",
+              "description": "Unique ID of the annotation record (within the \"source\").",
               "source": {
                 "@id": "annotations-5/omnipath_webservice_annotations__latest/record_id/source",
                 "fileObject": {
