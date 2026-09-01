@@ -85,7 +85,7 @@
       "name": "Complexes",
       "description": "Table in the OmniPath database provides a comprehensive dataset of protein complexes, integrating information from various resources.",
       "conformsTo": "http://mlcommons.org/croissant/1.0",
-      "datePublished": "2026-08-31T00:00:00",
+      "datePublished": "2026-08-31T00:00:00Z",
       "license": "No license",
       "url": "https://archive.omnipathdb.org/",
       "version": "0.1.0",
@@ -315,7 +315,7 @@
           "url": "https://saezlab.org/"
         }
       ],
-      "datePublished": "2026-08-31T00:00:00",
+      "datePublished": "2026-08-31T00:00:00Z",
       "license": "No license",
       "url": "https://archive.omnipathdb.org/",
       "version": "0.1.0",
@@ -545,7 +545,7 @@
           "url": "https://saezlab.org/"
         }
       ],
-      "datePublished": "2026-08-31T00:00:00",
+      "datePublished": "2026-08-31T00:00:00Z",
       "license": "No license",
       "url": "https://archive.omnipathdb.org/",
       "version": "0.1.0",
@@ -1176,7 +1176,7 @@
           "url": "https://saezlab.org/"
         }
       ],
-      "datePublished": "2026-08-31T00:00:00",
+      "datePublished": "2026-08-31T00:00:00Z",
       "license": "No license",
       "url": "https://archive.omnipathdb.org/",
       "version": "0.0.1",
@@ -1313,6 +1313,269 @@
           ]
         }
       ]
+    },
+    {
+      "@type": "sc:Dataset",
+      "name": "intercell",
+      "description": "The Intercell table in the OmniPath database provides annotations detailing the roles of proteins in intercellular communication, such as ligands, receptors, extracellular matrix components, etc.",
+      "conformsTo": "http://mlcommons.org/croissant/1.1",
+      "citeAs": "https://saezlab.org/",
+      "creator": [
+        {
+          "@type": "sc:Organization",
+          "name": "saezlab"
+        }
+      ],
+      "license": "https://opensource.org/licenses/MIT",
+      "version": "1.0.0",
+      "distribution": [
+        {
+          "@type": "cr:FileObject",
+          "@id": "intercell-5/file_0",
+          "name": "omnipath_webservice_intercell__latest.tsv.gz",
+          "contentSize": "6419866",
+          "contentUrl": "https://archive.omnipathdb.org/omnipath_webservice_intercell__latest.tsv.gz",
+          "encodingFormat": "application/gzip",
+          "sha256": "f04a3a62a04478c15a8179f4ca13d1d15a84e220a4cd2050abae19960d7ff7c1"
+        }
+      ],
+      "recordSet": [
+        {
+          "@type": "cr:RecordSet",
+          "@id": "intercell-5/omnipath_webservice_intercell__latest",
+          "name": "intercell-5/omnipath_webservice_intercell__latest",
+          "description": "Records from omnipath_webservice_intercell__latest.tsv.gz",
+          "field": [
+            {
+              "@type": "cr:Field",
+              "name": "category",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/category",
+              "dataType": "sc:Text",
+              "description": "Column 'category' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "category"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "parent",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/parent",
+              "dataType": "sc:Text",
+              "description": "Column 'parent' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "parent"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "database",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/database",
+              "dataType": "sc:Text",
+              "description": "Column 'database' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "database"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "scope",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/scope",
+              "dataType": "sc:Text",
+              "description": "Column 'scope' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "scope"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "aspect",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/aspect",
+              "dataType": "sc:Text",
+              "description": "Column 'aspect' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "aspect"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "source",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/source",
+              "dataType": "sc:Text",
+              "description": "Column 'source' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "source"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "uniprot",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/uniprot",
+              "dataType": "sc:Text",
+              "description": "Column 'uniprot' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "uniprot"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "genesymbol",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/genesymbol",
+              "dataType": "sc:Text",
+              "description": "Column 'genesymbol' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "genesymbol"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "entity_type",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/entity_type",
+              "dataType": "sc:Text",
+              "description": "Column 'entity_type' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "entity_type"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "consensus_score",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/consensus_score",
+              "dataType": "cr:Int64",
+              "description": "Column 'consensus_score' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "consensus_score"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "transmitter",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/transmitter",
+              "dataType": "sc:Boolean",
+              "description": "Column 'transmitter' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "transmitter"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "receiver",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/receiver",
+              "dataType": "sc:Boolean",
+              "description": "Column 'receiver' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "receiver"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "secreted",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/secreted",
+              "dataType": "sc:Boolean",
+              "description": "Column 'secreted' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "secreted"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "plasma_membrane_transmembrane",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/plasma_membrane_transmembrane",
+              "dataType": "sc:Boolean",
+              "description": "Column 'plasma_membrane_transmembrane' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "plasma_membrane_transmembrane"
+                }
+              }
+            },
+            {
+              "@type": "cr:Field",
+              "name": "plasma_membrane_peripheral",
+              "@id": "intercell-5/omnipath_webservice_intercell__latest/plasma_membrane_peripheral",
+              "dataType": "sc:Boolean",
+              "description": "Column 'plasma_membrane_peripheral' from omnipath_webservice_intercell__latest.tsv.gz",
+              "source": {
+                "fileObject": {
+                  "@id": "intercell-5/file_0"
+                },
+                "extract": {
+                  "column": "plasma_membrane_peripheral"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "url": "https://archive.omnipathdb.org/",
+      "datePublished": "2022-01-01T00:00:00Z"
     }
   ]
 }
