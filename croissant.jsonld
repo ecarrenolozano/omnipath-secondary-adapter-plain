@@ -1,5 +1,5 @@
 {
-  #"@context": {
+  "@context": {
     "@language": "en",
     "@vocab": "https://schema.org/",
     "sc": "https://schema.org/",
