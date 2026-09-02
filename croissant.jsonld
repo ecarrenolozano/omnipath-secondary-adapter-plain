@@ -52,7 +52,7 @@
   "@id": "omnipath-plain-adapter",
   "name": "OmniPath Plain Adapter",
   "description": "Adapter for omnipath information based just in BioCypher components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "https://opensource.org/licenses/MIT",
   "codeRepository": "https://github.com/ecarrenolozano/omnipath-secondary-adapter-plain",
   "creator": [
