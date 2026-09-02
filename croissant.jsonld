@@ -62,16 +62,6 @@
       "affiliation": "Scientific Software Center",
       "email": "edwin1892@gmail.com",
       "identifier": "0009000533592211"
-    },
-    {
-      "@type": "Person",
-      "name": "James Bowyer",
-      "affiliation": "Scientific Software Center"
-    },
-    {
-      "@type": "Organization",
-      "name": "Saezlab",
-      "affiliation": "UniKlinikum Heidelberg"
     }
   ],
   "keywords": [
@@ -1316,17 +1306,17 @@
     },
     {
       "@type": "sc:Dataset",
-      "name": "intercell",
+      "name": "Intercell",
       "description": "The Intercell table in the OmniPath database provides annotations detailing the roles of proteins in intercellular communication, such as ligands, receptors, extracellular matrix components, etc.",
       "conformsTo": "http://mlcommons.org/croissant/1.1",
       "citeAs": "https://saezlab.org/",
       "creator": [
         {
           "@type": "sc:Organization",
-          "name": "saezlab"
+          "name": "Saezlab"
         }
       ],
-      "license": "https://opensource.org/licenses/MIT",
+      "license": "No license",
       "version": "1.0.0",
       "distribution": [
         {
@@ -1575,7 +1565,7 @@
         }
       ],
       "url": "https://archive.omnipathdb.org/",
-      "datePublished": "2022-01-01T00:00:00Z"
+      "datePublished": "2004-01-01T00:00:00Z"
     }
   ]
 }
